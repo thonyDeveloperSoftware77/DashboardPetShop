@@ -1,11 +1,21 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
-import styles from '@/styles/Home.module.css'
-
+import Products from '../../components/Products'
+import Clients from '../../components/Clients'
+import logo from '../../public/img/logo.png';
+import { GetServerSideProps, GetStaticProps } from 'next';
 const inter = Inter({ subsets: ['latin'] })
+interface productsProps {
+  data: {
+    id: number,
+    nombre: string,
+    escripcion: string,
+    precio: number,
+  }[];
+}
 
-export default function Home() {
+export default function Home({ data }: productsProps) {
   return (
     <>
       <Head>
@@ -14,101 +24,46 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={styles.main}>
-        <div className={styles.description}>
-          <p>
-            Get started by editing&nbsp;
-            <code className={styles.code}>src/pages/index.tsx</code>
-          </p>
-          <div>
-            <a
-              href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              By{' '}
-              <Image
-                src="/vercel.svg"
-                alt="Vercel Logo"
-                className={styles.vercelLogo}
-                width={100}
-                height={24}
-                priority
-              />
-            </a>
+      <main>
+        <div style={{ display: 'flex', width: '100%'}}>
+          <nav>
+            <div >
+              <Image src={logo} alt="logo" />
+            </div>
+            <div style={{ marginTop: '100px' }}>
+              <div>
+                <a >Productos</a>
+              </div>
+              <div>
+                <a >Clientes</a>
+              </div>
+              <div>
+                <a >Ventas</a>
+              </div>
+            </div>
+            <div style={{ marginTop: '100px' }}>
+              <a href="">Estadisticas</a>
+            </div>
+            <div style={{ marginTop: '95%' }}>
+              footer
+            </div>
+          </nav>
+          <div style={{ width: '100%', display: 'flex', flexDirection: "column", justifyContent:"center", marginLeft: '25%', marginRight: '5%'}}>
+            <h1>Productos</h1>
+            <Products />
+            <Clients/>
           </div>
-        </div>
-
-        <div className={styles.center}>
-          <Image
-            className={styles.logo}
-            src="/next.svg"
-            alt="Next.js Logo"
-            width={180}
-            height={37}
-            priority
-          />
-        </div>
-
-        <div className={styles.grid}>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Docs <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Find in-depth information about Next.js features and&nbsp;API.
-            </p>
-          </a>
-
-          <a
-            href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Learn <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Learn about Next.js in an interactive course with&nbsp;quizzes!
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Templates <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Discover and deploy boilerplate example Next.js&nbsp;projects.
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Deploy <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Instantly deploy your Next.js site to a shareable URL
-              with&nbsp;Vercel.
-            </p>
-          </a>
         </div>
       </main>
     </>
   )
+}
+
+export const getStaticProps: GetStaticProps = async () => {
+  const res = await fetch('http://localhost:5086/api/Products')
+  const data = await res.json()
+  return {
+    props: { data },
+    revalidate: 1 // Regenera la página cada segundo
+  }
 }
