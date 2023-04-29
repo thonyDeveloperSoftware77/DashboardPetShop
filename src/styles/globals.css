@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Alkatra:wght@700&family=Roboto:wght@100;300;400&display=swap');
+
 * {
   box-sizing: border-box;
   padding: 0;
@@ -13,21 +14,29 @@ body {
   font-family: 'Roboto', sans-serif;
   background-color: #1f1d2b;
 }
+
 a {
   color: inherit;
   text-decoration: none;
 }
+
 nav {
 
   width: 20%;
-  background-color: #1f1d2b;
+  background: rgb(76, 44, 96);
+  background: linear-gradient(86deg, rgba(76, 44, 96, 1) 30%, rgba(31, 29, 32, 1) 73%);
   height: 100vh;
   border-style: groove;
-  border-top: #f6f6f6;
-  border-bottom: #f6f6f6;
-  border-left: #f6f6f6;
+  border-top: #9853c0;
+  border-bottom: #9853c0;
+  border-left: #9853c0;
+  border-color: #9853c0;
   position: fixed;
 
+}
+
+h1 {
+  font-size: 40px;
 }
 
 img {
@@ -41,6 +50,28 @@ nav div a {
   padding: 1rem;
   font-size: 20px;
 
+}
+
+.selectedDiv {
+  position: relative;
+  z-index: 0;
+}
+
+.selectedDiv::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background-color: #585470;
+  border-radius: 15px;
+  filter: blur(0.5px);
+}
+
+h3 {
+  font-weight: 100px;
 }
 
 .boxProducts {
@@ -62,16 +93,16 @@ nav div a {
 }
 
 .products th {
-  background-color: #f14aa0;
-  border: 1px solid #6756f7;
+  background-color: #9853c0;
   color: white;
   font-weight: bold;
   padding: 12px;
   text-align: left;
+  border-radius: 3px;
+  border: 5px solid #251f4b;
 }
 
 .products td {
-  border: 1px solid #6756f7;
   padding: 12px;
 }
 
@@ -80,13 +111,26 @@ nav div a {
 }
 
 .products tbody tr:hover {
-  background-color: #9853c0;
+  background-color: #6d4385;
 }
 
 
 
+input {
+  background-color: #251f4b;
+  color: #dfdfdf;
+  border: 1px solid #423e62;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 15px;
 
+}
 
+hr {
+  background-color: #dfdfdf;
+  width: 90%;
+  margin-bottom: 5%;
+}
 
 button {
   background-color: #251f4b;
@@ -99,6 +143,10 @@ button {
 }
 
 button:hover {
-  background-color: #f14aa0;
+  background-color: #aa0039;
 
+}
+
+.boxComponent {
+  margin-top: 5%;
 }

@@ -3,19 +3,33 @@ import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import Products from '../../components/Products'
 import Clients from '../../components/Clients'
-import logo from '../../public/img/logo.png';
-import { GetServerSideProps, GetStaticProps } from 'next';
-const inter = Inter({ subsets: ['latin'] })
-interface productsProps {
-  data: {
-    id: number,
-    nombre: string,
-    escripcion: string,
-    precio: number,
-  }[];
-}
+import logo from '../../public/img/petshopLogo.png';
+import { useEffect, useState } from 'react'
 
-export default function Home({ data }: productsProps) {
+export default function Home() {
+
+  //States navbars
+  const [products, setProducts] = useState(false);
+  const [clients, setClients] = useState(false);
+  const [options, setOptions] = useState( {
+    products: false,
+    clients: false,
+    estadisticas: false,
+
+  } );
+
+  //hadler navbar
+  const hadlerProducts = () => {
+    setProducts(true);
+    setClients(false);
+  }
+  const hadlerClients = () => {
+    setClients(true);
+    setProducts(false);
+  }
+
+
+
   return (
     <>
       <Head>
@@ -28,14 +42,15 @@ export default function Home({ data }: productsProps) {
         <div style={{ display: 'flex', width: '100%'}}>
           <nav>
             <div >
-              <Image src={logo} alt="logo" />
+              
+              <center><Image src={logo} alt="logo" /></center>
             </div>
             <div style={{ marginTop: '100px' }}>
-              <div>
-                <a >Productos</a>
+              <div  className={products ? "selectedDiv": ""} >
+                <a onClick={()=> hadlerProducts()} >Productos</a>
               </div>
-              <div>
-                <a >Clientes</a>
+              <div  className={clients ? "selectedDiv": ""} > 
+                <a  onClick={()=>hadlerClients()} >Clientes</a>
               </div>
               <div>
                 <a >Ventas</a>
@@ -49,9 +64,9 @@ export default function Home({ data }: productsProps) {
             </div>
           </nav>
           <div style={{ width: '100%', display: 'flex', flexDirection: "column", justifyContent:"center", marginLeft: '25%', marginRight: '5%'}}>
-            <h1>Productos</h1>
-            <Products />
-            <Clients/>
+            
+            {products && <Products />}
+            {clients && <Clients />}
           </div>
         </div>
       </main>
@@ -59,11 +74,3 @@ export default function Home({ data }: productsProps) {
   )
 }
 
-export const getStaticProps: GetStaticProps = async () => {
-  const res = await fetch('http://localhost:5086/api/Products')
-  const data = await res.json()
-  return {
-    props: { data },
-    revalidate: 1 // Regenera la página cada segundo
-  }
-}

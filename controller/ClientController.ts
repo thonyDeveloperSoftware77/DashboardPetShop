@@ -28,13 +28,13 @@ export const postData = async (product: responseApiClientes) => {
 
 //Actualizar un producto
 
-export const putData = async (id: number, product: responseApiClientes) => {
-    
-    console.log(product, id) 
+export const putData = async (id: number, cliente: responseApiClientes) => {
+     
+    console.log(cliente, id) 
     const res = await fetch(`http://localhost:5086/api/v1/PetShop?id=${id}`, {
        
     method: 'PUT',
-        body: JSON.stringify(product),
+        body: JSON.stringify(cliente),
         headers: {
             'Content-Type': 'application/json'
         }
@@ -46,9 +46,5 @@ export const deleteData = async (id: number) => {
     const res = await fetch(`http://localhost:5086/api/v1/PetShop/${id}`, {
         method: 'DELETE'
     })
-    if (res.ok && res.status >= 200 && res.status < 300) {
-        const data = await res.json()
-    } else {
-        // handle error
-    }
+   
 }

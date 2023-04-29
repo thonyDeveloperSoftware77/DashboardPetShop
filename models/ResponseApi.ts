@@ -4,6 +4,7 @@ export interface responseApiProductos {
         nombre: string,
         escripcion: string,
         precio: number,
+        category: string,
     }[];
 }
 

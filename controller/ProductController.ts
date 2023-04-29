@@ -42,9 +42,16 @@ export const putData = async (id: number, product: responseApiProductos) => {
 }
 
 //Eliminar un producto
+
 export const deleteData = async (id: number) => {
-    const res = await fetch(`http://localhost:5086/api/Products/${id}`, {
-        method: 'DELETE'
-    })
-    const data = await res.json()
+    try{
+        const res = await fetch(`http://localhost:5086/api/Products/${id}`, {
+            method: 'DELETE'
+        })
+    }
+   
+    catch(e){
+        console.log(e)
+    }
+    
 }

@@ -16,6 +16,7 @@ export default function Products({ }) {
         nombre: "",
         escripcion: "",
         precio: "",
+        category: "",
     });
     const handleAdd = async (newProduct) => {
         try {
@@ -38,7 +39,6 @@ export default function Products({ }) {
         e.preventDefault();
         handleAdd(newProduct);
     };
-
 
     const handleDelete = async (id) => {
         try {
@@ -63,72 +63,88 @@ export default function Products({ }) {
 
     return (
         <>
-            <h2>Añadir un nuevo producto</h2>
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    name="nombre"
-                    value={newProduct.nombre}
-                    onChange={handleChange}
-                    placeholder="Nombre"
-                />
+            <div className="boxComponent">
+                <center > <h1>Productos</h1> </center>
+                <div style={{ width: "85%", margin: "2%", display: "flex", justifyContent: "space-between", alignItems: "center", textAlign: "center" }}>
+                    <div><h2 >Añadir un nuevo producto</h2></div>
+                    <div></div>
+        
+                    <form onSubmit={handleSubmit}>
+                        <input
+                            type="text"
+                            name="nombre"
+                            value={newProduct.nombre}
+                            onChange={handleChange}
+                            placeholder="Nombre"
+                        />
+                        <input
+                            type="text"
+                            name="precio"
+                            value={newProduct.precio}
+                            onChange={handleChange}
+                            placeholder="Precio"
+                        />
+                        <input
+                            type="text"
+                            name="escripcion"
+                            value={newProduct.escripcion}
+                            onChange={handleChange}
+                            placeholder="Descripción"
+                        />
+                        //crea un select para elegir la categoria
+                        <select name="category" onChange={handleChange}>
+                            <option value="1">Perros</option>
+                            <option value="2">Gatos</option>
+                            <option value="3">Aves</option>
+                            <option value="4">Hamnsters</option>
+                            <option value="5">Peces</option>
+                        </select>
+                        
+                        
+                        <button type="submit">Añadir</button>
+                    </form>
+                </div>
+                <hr />
 
-                <input
-                    type="text"
-                    name="precio"
-                    value={newProduct.precio}
-                    onChange={handleChange}
-                    placeholder="Precio"
-                />
-                <input
-                    type="text"
-                    name="escripcion"
-                    value={newProduct.escripcion}
-                    onChange={handleChange}
-                    placeholder="Descripción"
-                />
-                <button type="submit">Añadir</button>
-            </form>
-            <table className="products">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Description</th>
-                        <th>Price</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {data.map((item) => (
-                        <tr key={item.id}>
-                            <td>{item.id}</td>
-                            <td>{item.nombre}</td>
-                            <td>{item.escripcion}</td>
-                            <td>{item.precio}</td>
-                            <td>
-                                <button
-                                    className="btn btn-primary"
-                                    onClick={() => handleEdit(item)}
-                                >
-                                    Editar
-                                </button>
-                                <button
-                                    className="btn btn-danger"
-                                    onClick={() => handleDelete(item.id)}
-                                >
-                                    Eliminar
-                                </button>
-                            </td>
+                <table className="products">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Price</th>
+                            <th>Acciones</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
-            {productToEdit && (
-                <EditProduct product={productToEdit} onEdit={handleSave} onCancel={handleCancel} />
-            )}
-
-
+                    </thead>
+                    <tbody>
+                        {data.map((item) => (
+                            <tr key={item.id}>
+                                <td>{item.id}</td>
+                                <td>{item.nombre}</td>
+                                <td>{item.escripcion}</td>
+                                <td>${item.precio}</td>
+                                <td>
+                                    <button
+                                        className="btn btn-primary"
+                                        onClick={() => handleEdit(item)}
+                                    >
+                                        Editar
+                                    </button>
+                                    <button
+                                        className="btn btn-danger"
+                                        onClick={() => handleDelete(item.id)}
+                                    >
+                                        Eliminar
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+                {productToEdit && (
+                    <EditProduct product={productToEdit} onEdit={handleSave} onCancel={handleCancel} />
+                )}
+            </div>
         </>
     );
 }
